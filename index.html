@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Generator</title>
+</head>
+<body>
+
+<h2>프롬프트 활용 프로세스</h2>
+<form id="promptForm">
+    가. 전문가 역할 부여 (Role): <input type="text" id="role" placeholder="예: 입사지원서 전문가"><br><br>
+    나. 구체적 상황 제시 (Situation): <input type="text" id="situation" placeholder="예: 삼성전자 영업마케팅직무에 신입 지원"><br><br>
+    다. 질문의 목적 (Purpose): <input type="text" id="purpose" placeholder="예: 자기소개서 항목 중 기업지원동기 작성"><br><br>
+    라. 답변의 명료성 (Clarity): <input type="text" id="clarity" placeholder="예: 상세하게"><br><br>
+    마. 답변의 형식 (Formation): <input type="text" id="formation" placeholder="예: 삼성의 인재상중 하나 + 나의 가치 연계로"><br><br>
+    바. 문장 형식 (Style): <input type="text" id="style" placeholder="예: 감동적으로"><br><br>
+    사. 프롬프트 데이터 (Input): <textarea id="inputData" rows="4" cols="50" placeholder="예: 삼성전자 디지털플라자 2개월..."></textarea><br><br>
+    <button type="button" onclick="generatePrompts()">프롬프트 생성</button>
+</form>
+
+<h3>생성된 프롬프트:</h3>
+<div id="prompts">
+    <!-- Generated prompts will appear here -->
+</div>
+
+<script>
+function generatePrompts() {
+    const role = document.getElementById('role').value;
+    const situation = document.getElementById('situation').value;
+    const purpose = document.getElementById('purpose').value;
+    const clarity = document.getElementById('clarity').value;
+    const formation = document.getElementById('formation').value;
+    const style = document.getElementById('style').value;
+    const inputData = document.getElementById('inputData').value;
+
+    // Example prompts based on user input
+    const prompts = [
+        `넌 ${role}야. ${situation} ${purpose}. ${clarity} ${formation}. ${style} ${inputData}.`,
+        `넌 ${role}의 입장에서 생각해봐. ${situation} ${purpose}. ${inputData}를 바탕으로 ${clarity} ${formation}.`,
+        `${role}로서, ${situation} ${purpose}. ${style} ${inputData}를 바탕으로 ${clarity} ${formation}.`
+    ];
+
+    let outputHtml = '';
+    prompts.forEach((prompt, index) => {
+        outputHtml += `<p>${prompt} <button onclick="copyToClipboard('${prompt}')">복사</button></p>`;
+    });
+    document.getElementById('prompts').innerHTML = outputHtml;
+}
+
+function copyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('프롬프트가 클립보드에 복사되었습니다!');
+}
+</script>
+
+</body>
+</html>
